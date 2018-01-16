@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -67,8 +66,8 @@ class Wap {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'WAP_VERSION' ) ) {
+			$this->version = WAP_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -151,6 +150,7 @@ class Wap {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_print_scripts-post-new.php', $plugin_admin, 'admin_add_warnings' );
 		$this->loader->add_action( 'admin_print_scripts-post.php', $plugin_admin, 'admin_add_warnings' );
+		$this->loader->add_action( 'wpmueditblogaction', $plugin_admin, 'admin_add_warnings' );
 	}
 
 	/**

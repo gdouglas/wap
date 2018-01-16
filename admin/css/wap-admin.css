@@ -5,8 +5,10 @@
 #visibility-radio-private:checked ~ .warning,
 #visibility-radio-password:checked ~ .warning {
   display: block;
-  color: red;
+  color: #a00;
 }
+/* todo */
+/* need to get reading options showing */
 .warning {
   display: none;
 }

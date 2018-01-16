@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -43,14 +42,14 @@ class Wap_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @since 1.0.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 	/**
@@ -59,14 +58,26 @@ class Wap_Admin {
 	 * @since    1.0.0
 	 */
 	public function admin_add_warnings() {
-		echo
-			'<script> 
-				window.onload = function() {
-					$(function($){
-						$("#post-visibility-select").append("<div class=\"warning\">Files added to this page will still be publicly available. This website is not intended for hosting private or sensitive content.</div>");
-					});
-				}
-			</script>';
+		// Add css.
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wap-admin.css', array(), $this->version, 'all' );
+
+		// Register the script.
+		wp_register_script( 'wap-script', plugins_url( 'js/wap-admin.js', __FILE__ ), array( 'jquery' ), '1.1', true );
+
+		// Localize the script with the message to be displayed.
+		$translation_array = array(
+			'msg' => __( '
+			<div class="warning">
+				Any media uploaded to this website will be publicly available. This platform is not for hosting private or sensitive content.
+					<div><a href="https://cms.ubc.ca/about/media-uploads/" target="_blank">[More info]</a>
+				</div>
+			</div>
+			', 'plugin-domain' ),
+		);
+		wp_localize_script( 'wap-script', 'wap', $translation_array );
+
+		// Enqueued script with localized data.
+		wp_enqueue_script( 'wap-script' );
 	}
 	/**
 	 * Register the stylesheets for the admin area.
@@ -86,7 +97,6 @@ class Wap_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wap-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -108,8 +118,6 @@ class Wap_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wap-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
